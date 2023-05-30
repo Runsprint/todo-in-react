@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
+body {
+  min-height: 100vh;
+}
+.name {
+  font-size: 48px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.clockDiv {
+  width: 430px;
+  height: 202px;
+  background-image: url(./assets/images/Rectangle2.png);
+  background-repeat: no-repeat;
+}
