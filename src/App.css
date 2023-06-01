@@ -1,15 +1,101 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
-body {
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   min-height: 100vh;
+  background-color: rgb(230, 228, 228);
+  flex-direction: column;
 }
-.name {
-  font-size: 48px;
-  font-weight: 400;
-  color: #ffffff;
+.todo {
+  color: #007fdb;
+  font-weight: 700;
+  font-size: 60px;
 }
 .clockDiv {
-  width: 430px;
+  width: 375px;
   height: 202px;
   background-image: url(./assets/images/Rectangle2.png);
   background-repeat: no-repeat;
+  background-position: cover;
+}
+.name {
+  font-size: 39px;
+  font-weight: 400;
+  color: #ffffff;
+  padding: 130px 0px 0px 212px;
+}
+.input {
+  height: 40px;
+  background: #ebeff2;
+  border: none;
+  width: 205px;
+  padding-left: 26px;
+  font-size: 14px;
+}
+.buttonPlus {
+  background-color: #20eeb0;
+  width: 88px;
+  height: 43px;
+  border: none;
+  border-radius: 3px;
+}
+.buttondiv {
+  background-color: #ffffff;
+  display: flex;
+  padding: 13px;
+  height: 60px;
+  align-items: center;
+}
+.logoes {
+  display: flex;
+  gap: 15px;
+  margin-right: 10px;
+}
+.title {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  color: #3b3b3b;
+}
+.time {
+  font-weight: 400;
+  font-size: 14px;
+  color: #888888;
+  margin-top: 5px;
+}
+.todo {
+  color: #007fdb;
+  font-weight: 700;
+  font-size: 96px;
+}
+.listDiv {
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px;
+}
+.inputimg {
+  position: relative;
+  right: 230px;
+}
+@media (min-width: 1440px) {
+  .input {
+    width: 245px;
+    padding-left: 35px;
+  }
+
+  #root {
+    flex-direction: row;
+  }
+  .inputimg {
+    position: relative;
+    right: 274px;
+  }
+  .clockDiv {
+    width: 430px;
+    height: 202px;
+  }
 }

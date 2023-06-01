@@ -1,14 +1,35 @@
 import plus from "./assets/images/plus.png";
-import circle from "./assets/images/akar-icons_circle-1.png";
-import { format, isToday, isYesterday } from "date-fns";
-import { List } from "./list";
-import { useState } from "react";
-import Recucle from "./assets/images/vector.png";
+import circle from "./assets/images/emptycircle.png";
 import Done from "./assets/images/akar-icons_circle-1.png";
+import { format, isToday, isYesterday } from "date-fns";
+import { useRef, useState } from "react";
+import Recucle from "./assets/images/vector.png";
+import { useEffect } from "react";
 
 const ToDo = (props) => {
   const [todoValue, setTodoValue] = useState("");
-  const [array, setArray] = useState([]);
+  const [changeImage, setChangeImage] = useState([]); // for change images onclick
+
+  const [array, setArray] = useState(() => {
+    const storedItems = localStorage.getItem("localTodo");
+
+    if (storedItems) {
+      const parsedItems = JSON.parse(storedItems, (key, value) => {
+        //parse for: string change into object
+        if (key === "createdAt") {
+          return new Date(value);
+        }
+
+        return value;
+      });
+
+      return parsedItems;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("localTodo", JSON.stringify(array)); // setitem for in new item and have name "localtodo"
+  }, [array]);
 
   const handlerShowList = () => {
     const newTask = {
@@ -19,6 +40,7 @@ const ToDo = (props) => {
     setArray([newTask, ...array]);
     setTodoValue("");
   };
+
   function renderDate(currentDate) {
     let formattedDate;
 
@@ -35,34 +57,60 @@ const ToDo = (props) => {
 
   return (
     <div className="mainDiv">
-      <img src={circle} />
-      <input
-        type="text"
-        placeholder="Note"
-        value={todoValue}
-        onChange={(event) => {
-          setTodoValue(event.target.value);
-        }}
-      />
-      <button className="buttonPlus" onClick={handlerShowList}>
-        <img src={plus} />
-      </button>
+      <div className="buttondiv">
+        <input
+          type="text"
+          placeholder="Note"
+          value={todoValue}
+          className="input"
+          onChange={(event) => {
+            setTodoValue(event.target.value);
+          }}
+        />
+        <img src={circle} className="inputimg" />
+        <button className="buttonPlus" onClick={handlerShowList}>
+          <img src={plus} />
+        </button>
+      </div>
+
       {array.map((item, index) => {
         const time = format(item.createdAt, " hh:mm b");
         const days = renderDate(item.createdAt);
 
         return (
           <div className="listDiv" key={index}>
-            <h1>{item.todo}</h1>
-            <p>
-              {days} at {time}
-            </p>
-            <img src={Done} />
-            <img src={Recucle} />
+            <div>
+              <h1 className="title">{item.todo}</h1>
+
+              <p className="time">
+                {days} at {time}
+              </p>
+            </div>
+            <div className="logoes">
+              <img
+                src={changeImage.includes(index) ? Done : circle} // include method , i should check of changeimage include index
+                alt="Current Image"
+                onClick={() => {
+                  setChangeImage(changeImage.concat(index)); // add index into []
+                }}
+              />
+              <img
+                src={Recucle}
+                onClick={() => {
+                  const index = array.indexOf(item);
+                  const newArray = array.filter((_, i) => i !== index); // its second version of remove item
+
+                  // const newArray = [...array]; //...array : that means that new variable is newArray and we can manipulate on it
+                  // newArray.splice(index, 1); // splice is for remove and after we save new value into new variable
+                  setArray(newArray);
+                }}
+              />
+            </div>
           </div>
         );
       })}
     </div>
   );
 };
+
 export default ToDo;
