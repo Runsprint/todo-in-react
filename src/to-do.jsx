@@ -74,7 +74,7 @@ const ToDo = (props) => {
       </div>
 
       {array.map((item, index) => {
-        const time = format(item.createdAt, " hh:mm b");
+        const time = format(item.createdAt, " hh:mm b"); // format times
         const days = renderDate(item.createdAt);
 
         return (
