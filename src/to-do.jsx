@@ -73,42 +73,43 @@ const ToDo = (props) => {
         </button>
       </div>
 
-      {array.map((item, index) => {
-        const time = format(item.createdAt, " hh:mm b"); // format times
-        const days = renderDate(item.createdAt);
+      {array &&
+        array.map((item, index) => {
+          const time = format(item.createdAt, " hh:mm b"); // format times
+          const days = renderDate(item.createdAt);
 
-        return (
-          <div className="listDiv" key={index}>
-            <div>
-              <h1 className="title">{item.todo}</h1>
+          return (
+            <div className="listDiv" key={index}>
+              <div>
+                <h1 className="title">{item.todo}</h1>
 
-              <p className="time">
-                {days} at {time}
-              </p>
+                <p className="time">
+                  {days} at {time}
+                </p>
+              </div>
+              <div className="logoes">
+                <img
+                  src={changeImage.includes(index) ? Done : circle} // include method , i should check of changeimage include index
+                  alt="Current Image"
+                  onClick={() => {
+                    setChangeImage(changeImage.concat(index)); // add index into []
+                  }}
+                />
+                <img
+                  src={Recucle}
+                  onClick={() => {
+                    const index = array.indexOf(item);
+                    const newArray = array.filter((_, i) => i !== index); // its second version of remove item
+
+                    // const newArray = [...array]; //...array : that means that new variable is newArray and we can manipulate on it
+                    // newArray.splice(index, 1); // splice is for remove and after we save new value into new variable
+                    setArray(newArray);
+                  }}
+                />
+              </div>
             </div>
-            <div className="logoes">
-              <img
-                src={changeImage.includes(index) ? Done : circle} // include method , i should check of changeimage include index
-                alt="Current Image"
-                onClick={() => {
-                  setChangeImage(changeImage.concat(index)); // add index into []
-                }}
-              />
-              <img
-                src={Recucle}
-                onClick={() => {
-                  const index = array.indexOf(item);
-                  const newArray = array.filter((_, i) => i !== index); // its second version of remove item
-
-                  // const newArray = [...array]; //...array : that means that new variable is newArray and we can manipulate on it
-                  // newArray.splice(index, 1); // splice is for remove and after we save new value into new variable
-                  setArray(newArray);
-                }}
-              />
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };
