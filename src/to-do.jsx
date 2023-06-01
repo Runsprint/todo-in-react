@@ -98,13 +98,13 @@ const ToDo = (props) => {
                 <img
                   src={Recucle}
                   onClick={() => {
-                    const index = array.indexOf(item);
-                    const newArray = array.filter((_, i) => i !== index); // its second version of remove item
-
-                    // const newArray = [...array]; //...array : that means that new variable is newArray and we can manipulate on it
-                    // newArray.splice(index, 1); // splice is for remove and after we save new value into new variable
+                    const newArray = array.filter((_, i) => i !== index);
                     setArray(newArray);
-                  }}
+                  }} // its second version of remove item
+
+                  // const newArray = [...array]; //...array : that means that new variable is newArray and we can manipulate on it
+                  // newArray.splice(index, 1); // splice is for remove and after we save new value into new variable
+                  // setArray(newArray);
                 />
               </div>
             </div>
