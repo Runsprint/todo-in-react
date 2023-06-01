@@ -3,7 +3,7 @@ import circle from "./assets/images/emptycircle.png";
 import Done from "./assets/images/akar-icons_circle-1.png";
 import { format, isToday, isYesterday } from "date-fns";
 import { useRef, useState } from "react";
-import Recucle from "./assets/images/vector.png";
+import Recucle from "./assets/images/Vector.png";
 import { useEffect } from "react";
 
 const ToDo = (props) => {
