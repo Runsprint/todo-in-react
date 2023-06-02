@@ -10,6 +10,14 @@ const ToDo = (props) => {
   const [todoValue, setTodoValue] = useState("");
   const [changeImage, setChangeImage] = useState([]);
 
+  //images functional, for save after refresh
+  useEffect(() => {
+    const storedChangeImage = localStorage.getItem("changeImage");
+    if (storedChangeImage) {
+      setChangeImage(JSON.parse(storedChangeImage));
+    }
+  }, []);
+  //functional for save in localstorage
   const [array, setArray] = useState(() => {
     const storedItems = localStorage.getItem("localTodo");
 
@@ -31,6 +39,7 @@ const ToDo = (props) => {
     localStorage.setItem("localTodo", JSON.stringify(array));
   }, [array]);
 
+  //function for save items information in array and push into it
   const handlerShowList = () => {
     const newTask = {
       todo: todoValue,
@@ -40,7 +49,7 @@ const ToDo = (props) => {
     setArray([newTask, ...array]);
     setTodoValue("");
   };
-
+  // function for render times, massive use how we needed
   function renderDate(currentDate) {
     let formattedDate;
 
@@ -75,7 +84,7 @@ const ToDo = (props) => {
 
       {Array.isArray(array) &&
         array.map((item, index) => {
-          const time = format(item.createdAt, " hh:mm b");
+          const time = format(item.createdAt, " hh:mm b"); // created new div and formattime
           const days = renderDate(item.createdAt);
 
           return (
@@ -89,16 +98,25 @@ const ToDo = (props) => {
               </div>
               <div className="logoes">
                 <img
-                  src={changeImage.includes(index) ? Done : circle}
+                  src={changeImage.includes(index) ? Done : circle} // include method
                   alt="Current Image"
                   onClick={() => {
-                    setChangeImage(changeImage.concat(index));
+                    if (changeImage.includes(index)) {
+                      setChangeImage(changeImage.filter((i) => i !== index)); // Remove index from changeImage
+                    } else {
+                      setChangeImage(changeImage.concat(index)); // Add index to changeImage
+                    }
+                    localStorage.setItem(
+                      // save in localstorage images if it is Done or circle.this is a functional how we can save everything in local storeage and up is usestate for this functional
+                      "changeImage",
+                      JSON.stringify(changeImage)
+                    );
                   }}
                 />
                 <img
                   src={Recucle}
                   onClick={() => {
-                    const index = array.indexOf(item);
+                    const index = array.indexOf(item); // its for delete function(splice methis) from where to and how many component u want to remove
                     const newArray = [...array];
                     newArray.splice(index, 1);
                     setArray(newArray);
