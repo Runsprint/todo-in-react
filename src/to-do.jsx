@@ -17,6 +17,7 @@ const ToDo = (props) => {
       setChangeImage(JSON.parse(storedChangeImage));
     }
   }, []);
+
   //functional for save in localstorage
   const [array, setArray] = useState(() => {
     const storedItems = localStorage.getItem("localTodo");
