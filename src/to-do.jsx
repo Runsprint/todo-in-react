@@ -8,27 +8,27 @@ import { useEffect } from "react";
 
 const ToDo = (props) => {
   const [todoValue, setTodoValue] = useState("");
-  const [changeImage, setChangeImage] = useState([]); // for change images onclick
+  const [changeImage, setChangeImage] = useState([]);
 
   const [array, setArray] = useState(() => {
     const storedItems = localStorage.getItem("localTodo");
 
     if (storedItems) {
       const parsedItems = JSON.parse(storedItems, (key, value) => {
-        //parse for: string change into object
         if (key === "createdAt") {
           return new Date(value);
         }
-
         return value;
       });
 
       return parsedItems;
     }
+
+    return []; // Return an empty array if there are no stored items
   });
 
   useEffect(() => {
-    localStorage.setItem("localTodo", JSON.stringify(array)); // setitem for in new item and have name "localtodo"
+    localStorage.setItem("localTodo", JSON.stringify(array));
   }, [array]);
 
   const handlerShowList = () => {
@@ -73,9 +73,9 @@ const ToDo = (props) => {
         </button>
       </div>
 
-      {array &&
+      {Array.isArray(array) &&
         array.map((item, index) => {
-          const time = format(item.createdAt, " hh:mm b"); // format times
+          const time = format(item.createdAt, " hh:mm b");
           const days = renderDate(item.createdAt);
 
           return (
@@ -89,20 +89,18 @@ const ToDo = (props) => {
               </div>
               <div className="logoes">
                 <img
-                  src={changeImage.includes(index) ? Done : circle} // include method , i should check of changeimage include index
+                  src={changeImage.includes(index) ? Done : circle}
                   alt="Current Image"
                   onClick={() => {
-                    setChangeImage(changeImage.concat(index)); // add index into []
+                    setChangeImage(changeImage.concat(index));
                   }}
                 />
                 <img
                   src={Recucle}
                   onClick={() => {
                     const index = array.indexOf(item);
-                    // const newArray = array.filter((_, i) => i !== index); // its second version of remove item
-
-                    const newArray = [...array]; //...array : that means that new variable is newArray and we can manipulate on it
-                    newArray.splice(index, 1); // splice is for remove and after we save new value into new variable
+                    const newArray = [...array];
+                    newArray.splice(index, 1);
                     setArray(newArray);
                   }}
                 />
